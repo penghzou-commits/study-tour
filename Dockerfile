@@ -1,41 +1,45 @@
-FROM nginx:alpine
+FROM python:3.11-slim
 
 # 设置时区为中国上海
 ENV TZ=Asia/Shanghai
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-# 移除默认的nginx配置
-RUN rm /etc/nginx/conf.d/default.conf
+# 设置工作目录
+WORKDIR /app
 
-# 添加自定义nginx配置
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+# 复制依赖文件并安装
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
 
-# 将项目文件复制到nginx的html目录
-COPY index.html /usr/share/nginx/html/
-COPY mobile.html /usr/share/nginx/html/
-COPY style.css /usr/share/nginx/html/
-COPY mobile-style.css /usr/share/nginx/html/
-COPY main.js /usr/share/nginx/html/
-COPY layout.js /usr/share/nginx/html/
-COPY student.js /usr/share/nginx/html/
-COPY base.js /usr/share/nginx/html/
-COPY school.js /usr/share/nginx/html/
-COPY project.js /usr/share/nginx/html/
-COPY activity.js /usr/share/nginx/html/
-COPY surrounding.js /usr/share/nginx/html/
-COPY documentary.js /usr/share/nginx/html/
-COPY finance.js /usr/share/nginx/html/
-COPY verification.js /usr/share/nginx/html/
-COPY graduation.js /usr/share/nginx/html/
-COPY announcement.js /usr/share/nginx/html/
-COPY grade.js /usr/share/nginx/html/
-COPY mobile-app.js /usr/share/nginx/html/
+# 复制所有项目文件
+COPY index.html .
+COPY mobile.html .
+COPY style.css .
+COPY mobile-style.css .
+COPY main.js .
+COPY layout.js .
+COPY student.js .
+COPY base.js .
+COPY school.js .
+COPY project.js .
+COPY activity.js .
+COPY surrounding.js .
+COPY documentary.js .
+COPY finance.js .
+COPY verification.js .
+COPY graduation.js .
+COPY announcement.js .
+COPY grade.js .
+COPY mobile-app.js .
 
-# 复制static目录
-COPY static/ /usr/share/nginx/html/static/
+# 复制 static 目录
+COPY static/ static/
 
-# 暴露8000端口
+# 复制 Python 主程序
+COPY main.py .
+
+# 暴露 8000 端口
 EXPOSE 8000
 
-# 启动nginx
-CMD ["nginx", "-g", "daemon off;"]
+# 启动 FastAPI 应用
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
