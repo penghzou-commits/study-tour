@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>研学平台 - 家长端</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="mobile-style.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: { 50:'#eff6ff',100:'#dbeafe',200:'#bfdbfe',300:'#93c5fd',400:'#60a5fa',500:'#3b82f6',600:'#2563eb',700:'#1d4ed8',800:'#1e40af',900:'#1e3a8a' },
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50">
+    <div id="mobile-app">
+        <!-- 顶部导航栏 -->
+        <header class="mobile-header" id="mobile-header">
+            <div class="flex items-center gap-2">
+                <i class="fas fa-graduation-cap text-xl text-white"></i>
+                <span class="text-white font-bold text-lg">研学家长端</span>
+            </div>
+            <div class="flex items-center gap-3">
+                <button class="text-white opacity-80 hover:opacity-100" id="btn-search-toggle">
+                    <i class="fas fa-search"></i>
+                </button>
+                <div class="relative" id="btn-notification">
+                    <i class="fas fa-bell text-white opacity-80"></i>
+                    <span class="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                </div>
+            </div>
+        </header>
+
+        <!-- 搜索栏（默认隐藏） -->
+        <div class="mobile-search-bar hidden" id="search-bar">
+            <div class="flex items-center gap-2 bg-white rounded-full px-4 py-2 shadow-sm">
+                <i class="fas fa-search text-gray-400 text-sm"></i>
+                <input type="text" placeholder="搜索活动、公告、周边..." class="flex-1 text-sm outline-none bg-transparent" id="mobile-search-input">
+                <button class="text-gray-400 text-sm" id="btn-search-close"><i class="fas fa-times"></i></button>
+            </div>
+        </div>
+
+        <!-- 页面内容区 -->
+        <main class="mobile-main" id="mobile-main"></main>
+
+        <!-- 底部Tab栏 -->
+        <nav class="mobile-tabbar" id="mobile-tabbar">
+            <div class="tab-item active" data-tab="home">
+                <i class="fas fa-home"></i>
+                <span>首页</span>
+            </div>
+            <div class="tab-item" data-tab="activities">
+                <i class="fas fa-compass"></i>
+                <span>报名</span>
+            </div>
+            <div class="tab-item" data-tab="orders">
+                <i class="fas fa-receipt"></i>
+                <span>订单</span>
+            </div>
+            <div class="tab-item" data-tab="profile">
+                <i class="fas fa-user"></i>
+                <span>我的</span>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Toast容器 -->
+    <div id="mobile-toast" class="fixed top-16 left-1/2 -translate-x-1/2 z-[999] hidden">
+        <div class="bg-gray-800 text-white text-sm px-5 py-2.5 rounded-full shadow-lg"></div>
+    </div>
+
+    <!-- 页脚签名 -->
+    <div class="mobile-footer-sig">
+        <p>由 <a href="https://with.woa.com/" style="color: #8A2BE2;" target="_blank">With</a> 通过自然语言生成</p>
+    </div>
+
+    <script type="module" src="mobile-app.js"></script>
+</body>
+</html>
